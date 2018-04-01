@@ -28,5 +28,7 @@ namespace Shopping_Cart_Api.Models
         public int Stock { get; set; }
 
         public List<Image> Image { get; set; }
+
+        public List<ProductTag> Tags { get; set; }
     }
 }

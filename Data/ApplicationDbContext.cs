@@ -21,9 +21,14 @@ namespace Shopping_Cart_Api.Data
         
         public DbSet<SoldList> SoldList { get; set; }
 
+        public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<ProductTag> ProductTags { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Shipment>().HasKey(c => new{c.UserId , c.ProductId});
+            builder.Entity<ProductTag>().HasKey(c => new {c.ProductId, c.TagId});
             base.OnModelCreating(builder);
         }
     }
