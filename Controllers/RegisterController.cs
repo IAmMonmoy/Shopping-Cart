@@ -30,7 +30,9 @@ namespace Shopping_Cart_Api.Controllers
                 };
                 try{
                     var result = await _userManager.CreateAsync(user,registrationViewModel.Password);
-                    return Ok();
+                    if(result.Succeeded)
+                        return Ok();
+                    else return Ok(result);
                 }
                 catch{
                     return BadRequest("Can Not Create User");
