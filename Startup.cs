@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shopping_Cart_Api.Data;
+using Shopping_Cart_Api.Models;
 
 namespace Shopping_Cart
 {
@@ -29,6 +30,12 @@ namespace Shopping_Cart
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
+
+            //Add identity
+            services.AddIdentity<ApplicationUser,IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
+            
             services.AddMvc();
         }
 
@@ -39,6 +46,8 @@ namespace Shopping_Cart
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
 
             app.UseMvc();
         }
