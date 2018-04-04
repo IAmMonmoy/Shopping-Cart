@@ -35,6 +35,9 @@ namespace Shopping_Cart
             services.AddIdentity<ApplicationUser,IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
+
+            //JWT Validation
+            
             
             services.AddMvc();
         }

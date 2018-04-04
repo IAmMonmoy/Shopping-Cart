@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace Shopping_Cart_Api.Controllers
 {
@@ -19,15 +20,19 @@ namespace Shopping_Cart_Api.Controllers
         private readonly ApplicationDbContext _appDbcontext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IPasswordHasher<ApplicationUser> _hasher;
+        private readonly IConfiguration _config;
         public AuthController(ApplicationDbContext applicationDbContext
                             , UserManager<ApplicationUser> userManager
-                            , IPasswordHasher<ApplicationUser> hasher)
+                            , IPasswordHasher<ApplicationUser> hasher
+                            , IConfiguration config)
         {
             _appDbcontext = applicationDbContext;
             _userManager = userManager;
             _hasher = hasher;
+            _config = config;
         }
 
+        [HttpPost]
         public async Task<IActionResult> Login([FromBody]LoginViewModel model)
         {
            try{
@@ -42,12 +47,12 @@ namespace Shopping_Cart_Api.Controllers
                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                        };
 
-                       var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("FirstAuthTokenMadeByMonmoy"));
+                       var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtIssuerOptions:Key"]));
                        var cred = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
 
                        var token = new JwtSecurityToken(
-                           issuer : "http://ShoppingCartApiByMonmoy.org",
-                           audience: "http://ShoppingCartApiByMonmoy.org",
+                           issuer : _config["JwtIssuerOptions:Issuer"],
+                           audience: _config["JwtIssuerOptions:Audience"],
                            claims: claims,
                            expires: DateTime.UtcNow.AddMinutes(60),
                            signingCredentials: cred
