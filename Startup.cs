@@ -15,6 +15,7 @@ using Shopping_Cart_Api.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Shopping_Cart_Api.Services;
 
 namespace Shopping_Cart
 {
@@ -38,6 +39,8 @@ namespace Shopping_Cart
             services.AddIdentity<ApplicationUser,IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddDefaultTokenProviders();
+            
+            services.AddTransient<ITagService,TagService>();
 
             //token validation parameters
            var tokenValidationParameters = new TokenValidationParameters 
