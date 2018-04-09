@@ -15,6 +15,14 @@ namespace Shopping_Cart_Api.Controllers
             _tagService = tagService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var isSuccessResult = await _tagService.GetAllTag();
+            if(isSuccessResult == null) return BadRequest("The Request was Unsuccessfull");
+            return Json(isSuccessResult);
+        }
+
         [HttpGet("{id}", Name = "TagGet")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -34,6 +42,33 @@ namespace Shopping_Cart_Api.Controllers
             {
                 var NewUri = Url.Link("TagGet",new{id = new Guid(isSuccessResult)});
                 return Created(NewUri,model);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id , [FromBody]TagViewModel model)
+        {
+            var isSuccessResult = await _tagService.EditTagById(id,model);
+
+            if(isSuccessResult == "Unsucessfull")
+                return BadRequest("The Request was Unsuccessfull");
+            else 
+            {
+                var NewUri = Url.Link("TagGet",new{id = new Guid(isSuccessResult)});
+                return Created(NewUri,model);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var isSuccessResult = await _tagService.DeleteTagById(id);
+
+            if(!isSuccessResult)
+                return BadRequest("The Request was Unsuccessfull");
+            else 
+            {
+                return Ok("Sucessfull");
             }
         }
     }
