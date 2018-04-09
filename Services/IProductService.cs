@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Shopping_Cart_Api.Models;
+using Shopping_Cart_Api.ViewModels;
 
 namespace Shopping_Cart_Api.Services
 {
@@ -9,8 +10,8 @@ namespace Shopping_Cart_Api.Services
     {
         Task<IEnumerable<Product>> GetAllProduct();
         Task<Product> GetProductById(Guid id);
-        Task<bool> AddProduct();
-        Task<bool> EditProduct();
-        Task<bool> DeleteProduct(Guid id);
+        Task<string> AddProduct(ProductViewModel tag);
+        Task<string> EditProductById(Guid id, ProductViewModel tag);
+        Task<bool> DeleteProductById(Guid id);
     }
 }
