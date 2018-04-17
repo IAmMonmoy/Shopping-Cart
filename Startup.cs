@@ -41,6 +41,7 @@ namespace Shopping_Cart
                     .AddDefaultTokenProviders();
             
             services.AddTransient<ITagService,TagService>();
+            services.AddTransient<IProductService,ProductService>();
 
             //token validation parameters
            var tokenValidationParameters = new TokenValidationParameters 

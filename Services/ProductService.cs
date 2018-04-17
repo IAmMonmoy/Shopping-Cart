@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Shopping_Cart_Api.Models;
 using Shopping_Cart_Api.Data;
 using Shopping_Cart_Api.ViewModels;
+using System.IO;
+using System.Linq;
 
 namespace Shopping_Cart_Api.Services
 {
@@ -32,9 +34,66 @@ namespace Shopping_Cart_Api.Services
             return await _context.SaveChangesAsync() == 1;
         }
 
-        public Task<string> AddProduct(ProductViewModel tag)
+        public async Task<string> AddProduct(ProductViewModel product)
         {
-            throw new NotImplementedException();
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+            var message = "";
+
+             var entity = new Product
+            {
+                Id = new Guid(),
+                ProductCode = product.ProductCode,
+                ProductName = product.ProductName,
+                Description = product.Description,
+                Price = product.Price,
+                Stock = product.Stock
+            };
+
+             _context.Products.Add(entity);
+
+            foreach (var img in product.Image)
+            {
+                var extention = Path.GetExtension(img.FileName);
+                if(allowedExtensions.Contains(extention.ToLower()) || img.Length > 2000000)
+                    message = "Select jpg or jpeg or png less than 2Μ";
+                var fileName = Path.Combine("Products", entity.Id+extention);
+                var path = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot",fileName);
+               
+                try{
+                    using(var stream = new FileStream(path,FileMode.Create))
+                    {
+                        await img.CopyToAsync(stream);
+                    }
+                }
+                catch{
+                    return "can not upload image";
+                }
+
+                var imageEntity = new Image
+                {
+                    Id = new Guid(),
+                    ProductId = entity.Id,
+                    Path = path
+                };
+
+                _context.Images.Add(imageEntity);
+            }
+
+            foreach (var tag in product.Tags)
+            {
+                var tagEntity = new ProductTag
+                {
+                    ProductId = entity.Id,
+                    TagId = tag
+                };
+                _context.ProductTags.Add(tagEntity);
+            }
+
+             bool success = await _context.SaveChangesAsync() >= 1;
+
+            if(success) return entity.Id.ToString();
+            else return message;
+           
         }
 
         public Task<string> EditProductById(Guid id, ProductViewModel tag)
@@ -42,9 +101,10 @@ namespace Shopping_Cart_Api.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteProductById(Guid id)
+        public async Task<bool> DeleteProductById(Guid id)
         {
-            throw new NotImplementedException();
+            _context.Products.Remove(await _context.Products.FindAsync(id));
+            return 1 == await _context.SaveChangesAsync();
         }
     }
 }
