@@ -28,10 +28,14 @@ namespace Shopping_Cart_Api.Controllers
                     UserName = registrationViewModel.UserName,
                     Email = registrationViewModel.Email
                 };
+                //create user and add simpleuser role
                 try{
                     var result = await _userManager.CreateAsync(user,registrationViewModel.Password);
                     if(result.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(user,Constants.SimpleUser);
                         return Ok();
+                    }
                     else return Ok(result);
                 }
                 catch{
