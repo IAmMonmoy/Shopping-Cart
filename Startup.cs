@@ -44,6 +44,13 @@ namespace Shopping_Cart
             services.AddTransient<IProductService,ProductService>();
             services.AddTransient<IProductTagService,ProductTagService>();
 
+            services.AddCors(options => 
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                                    builder => builder.WithOrigins("http://localhost:4200")
+                                    .AllowAnyHeader().AllowAnyMethod());
+            });
+
             //token validation parameters
            var tokenValidationParameters = new TokenValidationParameters 
            {
@@ -92,6 +99,8 @@ namespace Shopping_Cart
 
             //Create an account and make it administrator
             AssignAdminRole(userManager).Wait();
+
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseAuthentication();
 
