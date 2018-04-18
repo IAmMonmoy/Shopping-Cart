@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 
 namespace Shopping_Cart_Api.Controllers
 {
@@ -19,17 +20,20 @@ namespace Shopping_Cart_Api.Controllers
         
         private readonly ApplicationDbContext _appDbcontext;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IPasswordHasher<ApplicationUser> _hasher;
         private readonly IConfiguration _config;
         public AuthController(ApplicationDbContext applicationDbContext
                             , UserManager<ApplicationUser> userManager
                             , IPasswordHasher<ApplicationUser> hasher
-                            , IConfiguration config)
+                            , IConfiguration config,
+                            RoleManager<IdentityRole> roleManager)
         {
             _appDbcontext = applicationDbContext;
             _userManager = userManager;
             _hasher = hasher;
             _config = config;
+            _roleManager = roleManager;
         }
 
         [HttpPost]
@@ -41,11 +45,28 @@ namespace Shopping_Cart_Api.Controllers
                {
                    if(_hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
                    {
-                       var claims = new[]
+                       var claims = new List<Claim>(new[]
                        {
                            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                       };
+                       });
+
+
+                        //add role to claim
+                       var roleNames = await _userManager.GetRolesAsync(user);
+                       
+                       foreach(var roleName in roleNames)
+                       {
+                           var role = await _roleManager.FindByNameAsync(roleName);
+                           if(role != null)
+                           {
+                               var roleClaim = new Claim(ClaimTypes.Role, role.Name);
+                               claims.Add(roleClaim);
+
+                               var roleClaims = await _roleManager.GetClaimsAsync(role);
+                               claims.AddRange(roleClaims);
+                           }
+                       }
 
                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtIssuerOptions:Key"]));
                        var cred = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
