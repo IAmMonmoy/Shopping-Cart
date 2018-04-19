@@ -20,7 +20,7 @@ namespace Shopping_Cart_Api.Controllers
         public async Task<IActionResult> Get()
         {
             var isSuccessResult = await _tagService.GetAllTag();
-            if(isSuccessResult == null) return BadRequest("The Request was Unsuccessfull");
+            if(isSuccessResult == null) return BadRequest();
             return Json(isSuccessResult);
         }
 
@@ -28,7 +28,7 @@ namespace Shopping_Cart_Api.Controllers
         public async Task<IActionResult> Get(Guid id)
         {
             var isSuccessResult = await _tagService.GetTagById(id);
-            if(isSuccessResult == null) return BadRequest("The Request was Unsuccessfull");
+            if(isSuccessResult == null) return BadRequest();
             return Json(isSuccessResult);
         }
 
@@ -38,7 +38,7 @@ namespace Shopping_Cart_Api.Controllers
             var isSuccessResult = await _tagService.AddTag(model);
 
             if(isSuccessResult == "Unsucessfull")
-                return BadRequest("The Request was Unsuccessfull");
+                return BadRequest();
             else 
             {
                 var NewUri = Url.Link("TagGet",new{id = new Guid(isSuccessResult)});
@@ -52,7 +52,7 @@ namespace Shopping_Cart_Api.Controllers
             var isSuccessResult = await _tagService.EditTagById(id,model);
 
             if(isSuccessResult == "Unsucessfull")
-                return BadRequest("The Request was Unsuccessfull");
+                return BadRequest();
             else 
             {
                 var NewUri = Url.Link("TagGet",new{id = new Guid(isSuccessResult)});
@@ -66,10 +66,10 @@ namespace Shopping_Cart_Api.Controllers
             var isSuccessResult = await _tagService.DeleteTagById(id);
 
             if(!isSuccessResult)
-                return BadRequest("The Request was Unsuccessfull");
+                return BadRequest();
             else 
             {
-                return Ok("Sucessfull");
+                return Ok();
             }
         }
     }

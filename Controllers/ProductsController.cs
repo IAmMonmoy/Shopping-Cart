@@ -21,7 +21,7 @@ namespace Shopping_Cart_Api.Controllers
         public async Task<IActionResult> Get()
         {
             var isSuccessResult = await _productService.GetAllProduct();
-            if(isSuccessResult == null) return BadRequest("The Request was Unsuccessfull");
+            if(isSuccessResult == null) return BadRequest();
             return Json(isSuccessResult);
         }
 
@@ -29,7 +29,7 @@ namespace Shopping_Cart_Api.Controllers
         public async Task<IActionResult> Get(Guid id)
         {
             var isSuccessResult = await _productService.GetProductById(id);
-            if(isSuccessResult == null) return BadRequest("The Request was Unsuccessfull");
+            if(isSuccessResult == null) return BadRequest();
             return Json(isSuccessResult);
         }
 
@@ -49,7 +49,7 @@ namespace Shopping_Cart_Api.Controllers
             {
                 //var NewUri = Url.Link("ProductGet",new{id = new Guid(isSuccessResult)});
                 //return Created(NewUri,model);
-                return Json("Yes");
+                return Ok();
             }
         }
 
@@ -73,10 +73,10 @@ namespace Shopping_Cart_Api.Controllers
             var isSuccessResult = await _productService.DeleteProductById(id);
 
             if(!isSuccessResult)
-                return BadRequest("The Request was Unsuccessfull");
+                return BadRequest();
             else 
             {
-                return Ok("Sucessfull");
+                return Ok();
             }
         }
     }
