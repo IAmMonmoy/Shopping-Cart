@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Shopping_Cart_Api.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {

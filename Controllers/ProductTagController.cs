@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace Shopping_Cart_Api.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     public class ProductTagsController : Controller
     {
         private readonly IProductTagService _productTagService;
