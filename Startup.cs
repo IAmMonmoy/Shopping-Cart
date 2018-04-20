@@ -99,6 +99,8 @@ namespace Shopping_Cart
 
             //Create an account and make it administrator
             AssignAdminRole(userManager).Wait();
+            
+            app.UseStaticFiles();
 
             app.UseCors("AllowSpecificOrigin");
 

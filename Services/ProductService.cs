@@ -56,7 +56,7 @@ namespace Shopping_Cart_Api.Services
                 var extention = Path.GetExtension(img.FileName);
                 if(allowedExtensions.Contains(extention.ToLower()) || img.Length > 2000000)
                     message = "Select jpg or jpeg or png less than 2Μ";
-                var fileName = Path.Combine("Products", entity.Id+img.FileName+extention);
+                var fileName = Path.Combine("Products",DateTime.Now.Ticks+extention);
                 var path = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot",fileName);
                
                 try{
@@ -73,7 +73,7 @@ namespace Shopping_Cart_Api.Services
                 {
                     Id = new Guid(),
                     ProductId = entity.Id,
-                    Path = path
+                    Path = fileName
                 };
 
                 _context.Images.Add(imageEntity);
