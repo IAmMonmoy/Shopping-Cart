@@ -20,12 +20,12 @@ namespace Shopping_Cart_Api.Services
 
         public async Task<IEnumerable<Product>> GetAllProduct()
         {
-            return await _context.Products.ToArrayAsync();
+            return await _context.Products.Include(pro => pro.Tags).Include( pro => pro.Image).ToArrayAsync();
         }
 
         public async Task<Product> GetProductById(Guid id)
         {
-            return await _context.Products.FindAsync(id);
+            return await _context.Products.Include(pro => pro.Tags).Include( pro => pro.Image).Where(m=> m.Id == id).SingleAsync();
         }
         
         public async Task<bool> DeleteProduct(Guid id)

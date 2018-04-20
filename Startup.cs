@@ -80,7 +80,7 @@ namespace Shopping_Cart
                option.SaveToken = true;
            });
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions( option => option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
