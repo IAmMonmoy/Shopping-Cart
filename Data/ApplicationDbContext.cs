@@ -19,7 +19,7 @@ namespace Shopping_Cart_Api.Data
 
         public DbSet<Shipment> Shipments { get; set; }
 
-        public DbSet<Shipments> ProductShipments { get; set; }
+        public DbSet<ProductShipments> ProductShipments { get; set; }
         
         public DbSet<SoldList> SoldList { get; set; }
 
@@ -27,7 +27,7 @@ namespace Shopping_Cart_Api.Data
 
         public DbSet<ProductTag> ProductTags { get; set; }
 
-        public DbSet<ShipmentProductQuantity> shipmentProductQuantity { get; set; }
+        public DbSet<ShipmentProductQuantity> ShipmentProductQuantity { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

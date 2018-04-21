@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Shopping_Cart_Api.Models
 {
-    public class Shipments
+    public class ProductShipments
     {
         [Required]
         public Guid Id { get; set; }

@@ -249,6 +249,32 @@ namespace ShoppingCart.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Shopping_Cart_Api.Models.ProductShipments", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("BuyerAddress")
+                        .IsRequired();
+
+                    b.Property<string>("BuyerName")
+                        .IsRequired();
+
+                    b.Property<string>("BuyerPhone")
+                        .IsRequired();
+
+                    b.Property<double>("TotalCost");
+
+                    b.Property<string>("UserName")
+                        .IsRequired();
+
+                    b.Property<bool>("isDelivered");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductShipments");
+                });
+
             modelBuilder.Entity("Shopping_Cart_Api.Models.ProductTag", b =>
                 {
                     b.Property<Guid>("ProductId");
@@ -282,41 +308,15 @@ namespace ShoppingCart.Migrations
 
                     b.Property<string>("ProductName");
 
+                    b.Property<Guid>("ProductShipmentsId");
+
                     b.Property<int>("Quantity");
 
-                    b.Property<Guid>("ShipmentsId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ShipmentsId");
+                    b.HasIndex("ProductShipmentsId");
 
-                    b.ToTable("shipmentProductQuantity");
-                });
-
-            modelBuilder.Entity("Shopping_Cart_Api.Models.Shipments", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("BuyerAddress")
-                        .IsRequired();
-
-                    b.Property<string>("BuyerName")
-                        .IsRequired();
-
-                    b.Property<string>("BuyerPhone")
-                        .IsRequired();
-
-                    b.Property<double>("TotalCost");
-
-                    b.Property<string>("UserName")
-                        .IsRequired();
-
-                    b.Property<bool>("isDelivered");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductShipments");
+                    b.ToTable("ShipmentProductQuantity");
                 });
 
             modelBuilder.Entity("Shopping_Cart_Api.Models.SoldList", b =>
@@ -444,9 +444,9 @@ namespace ShoppingCart.Migrations
 
             modelBuilder.Entity("Shopping_Cart_Api.Models.ShipmentProductQuantity", b =>
                 {
-                    b.HasOne("Shopping_Cart_Api.Models.Shipments", "Shipments")
+                    b.HasOne("Shopping_Cart_Api.Models.ProductShipments", "ProductShipments")
                         .WithMany()
-                        .HasForeignKey("ShipmentsId")
+                        .HasForeignKey("ProductShipmentsId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

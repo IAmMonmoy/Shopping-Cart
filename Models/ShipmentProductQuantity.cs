@@ -11,9 +11,9 @@ namespace Shopping_Cart_Api.Models
 
         public int Quantity { get; set; }
         
-        public Shipments Shipments { get; set; }
+        public ProductShipments ProductShipments { get; set; }
         
         [Required]
-        public Guid ShipmentsId { get; set; }
+        public Guid ProductShipmentsId { get; set; }
     }
 }

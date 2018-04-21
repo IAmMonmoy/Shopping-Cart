@@ -43,6 +43,7 @@ namespace Shopping_Cart
             services.AddTransient<ITagService,TagService>();
             services.AddTransient<IProductService,ProductService>();
             services.AddTransient<IProductTagService,ProductTagService>();
+            services.AddTransient<IShipmentService,ShipmentService>();
 
             services.AddCors(options => 
             {
