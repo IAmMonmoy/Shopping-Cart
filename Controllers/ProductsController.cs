@@ -52,19 +52,18 @@ namespace Shopping_Cart_Api.Controllers
             }
         }
 
-        /*[HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id , [FromBody]TagViewModel model)
+        [HttpPut("{id}/{stock}")]
+        public async Task<IActionResult> Put(Guid id , int stock)
         {
-            var isSuccessResult = await _tagService.EditTagById(id,model);
+            var isSuccessResult = await _productService.EditProductById(id,stock);
 
             if(isSuccessResult == "Unsucessfull")
-                return BadRequest("The Request was Unsuccessfull");
+                return BadRequest();
             else 
             {
-                var NewUri = Url.Link("TagGet",new{id = new Guid(isSuccessResult)});
-                return Created(NewUri,model);
+                return Ok();
             }
-        }*/
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)

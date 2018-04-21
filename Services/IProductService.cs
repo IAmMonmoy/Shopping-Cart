@@ -11,7 +11,7 @@ namespace Shopping_Cart_Api.Services
         Task<IEnumerable<Product>> GetAllProduct();
         Task<Product> GetProductById(Guid id);
         Task<string> AddProduct(ProductViewModel tag);
-        Task<string> EditProductById(Guid id, ProductViewModel tag);
+        Task<string> EditProductById(Guid id, int stock);
         Task<bool> DeleteProductById(Guid id);
     }
 }

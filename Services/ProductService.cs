@@ -106,5 +106,14 @@ namespace Shopping_Cart_Api.Services
             _context.Products.Remove(await _context.Products.FindAsync(id));
             return 1 == await _context.SaveChangesAsync();
         }
+
+        public async Task<string> EditProductById(Guid id, int stock)
+        {
+            var entity = await _context.Products.FindAsync(id);
+            entity.Stock = stock;
+            bool success = await _context.SaveChangesAsync() == 1;
+            if(success) return entity.Id.ToString();
+            else return "Unsucessfull" ;
+        }
     }
 }
