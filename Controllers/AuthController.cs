@@ -60,7 +60,7 @@ namespace Shopping_Cart_Api.Controllers
                            var role = await _roleManager.FindByNameAsync(roleName);
                            if(role != null)
                            {
-                               var roleClaim = new Claim(ClaimTypes.Role, role.Name);
+                               var roleClaim = new Claim(JwtRegisteredClaimNames.Nonce, role.Name);
                                claims.Add(roleClaim);
 
                                var roleClaims = await _roleManager.GetClaimsAsync(role);
