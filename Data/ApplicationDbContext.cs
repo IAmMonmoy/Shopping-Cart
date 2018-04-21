@@ -18,12 +18,16 @@ namespace Shopping_Cart_Api.Data
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Shipment> Shipments { get; set; }
+
+        public DbSet<Shipments> ProductShipments { get; set; }
         
         public DbSet<SoldList> SoldList { get; set; }
 
         public DbSet<Tag> Tags { get; set; }
 
         public DbSet<ProductTag> ProductTags { get; set; }
+
+        public DbSet<ShipmentProductQuantity> shipmentProductQuantity { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
