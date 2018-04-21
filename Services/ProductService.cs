@@ -110,7 +110,11 @@ namespace Shopping_Cart_Api.Services
         public async Task<string> EditProductById(Guid id, int stock)
         {
             var entity = await _context.Products.FindAsync(id);
-            entity.Stock = stock;
+            
+            if(entity.Stock-stock >= 0)
+                entity.Stock = entity.Stock-stock;
+            else return "Unsucessfull";
+
             bool success = await _context.SaveChangesAsync() == 1;
             if(success) return entity.Id.ToString();
             else return "Unsucessfull" ;
