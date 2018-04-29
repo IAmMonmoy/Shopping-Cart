@@ -43,9 +43,9 @@ This is built on ASP.NET CORE 2.0. The front end with angular is on my repositor
       ```
    
   
-   * [Get] http://localhost:5000/api/Tags **Get All Tags**
+   * [Get] http://localhost:5000/api/Tags **Get All Tags (With Authorization Header)**
    
-   * [Post] http://localhost:5000/api/Tags **Post Tags**
+   * [Post] http://localhost:5000/api/Tags **Post Tags (With Authorization Header)**
       * Json Data in body exmaple
       ```
       {
@@ -54,9 +54,9 @@ This is built on ASP.NET CORE 2.0. The front end with angular is on my repositor
       }
       ```
    
-   * [Get] http://localhost:5000/api/Tags/{id} **Get Tag By Id**
+   * [Get] http://localhost:5000/api/Tags/{id} **Get Tag By Id (With Authorization Header)**
    
-   * [Put] http://localhost:5000/api/Tags/{id} **Edit Tag By Id**
+   * [Put] http://localhost:5000/api/Tags/{id} **Edit Tag By Id (With Authorization Header)*
      * Json Data in body exmaple
       ```
       {
@@ -65,28 +65,29 @@ This is built on ASP.NET CORE 2.0. The front end with angular is on my repositor
       }
       ```
    
-   * [Delete] http://localhost:5000/api/Tags/{id} **Delete Tag By Id**
+   * [Delete] http://localhost:5000/api/Tags/{id} **Delete Tag By Id (With Authorization Header)**
    
    
   
    * [Get] http://localhost:5000/api/products/ **Get All Products**
    
-   * [Post] http://localhost:5000/api/products/ **Post Product**
-     * Form Data Example
+   * [Post] http://localhost:5000/api/products/ **Post Product (With Authorization Header)**
+     * See Form Data Example In The ScreenShots Section
    
-   * [Put] http://localhost:5000/api/products/{id} **Edit Product By Id**
+   * [Put] http://localhost:5000/api/products/{id} **Edit Product By Id (With Authorization Header)**
+      * See Form Data Example In The ScreenShots Section
    
-   * [Put] http://localhost:5000/api/products/{id}/{stock} **Update product stock**
+   * [Put] http://localhost:5000/api/products/{id}/{stock} **Update product stock (With Authorization Header)**
    
-   * [Delete] http://localhost:5000/api/products/{id} **Delete Product By Id**
+   * [Delete] http://localhost:5000/api/products/{id} **Delete Product By Id (With Authorization Header)**
    
    
   
-   * [Get] http://localhost:5000/api/shipment/ **Get All Shipment**
+   * [Get] http://localhost:5000/api/shipment/ **Get All Shipment (With Authorization Header)**
    
-   * [Get] http://localhost:5000/api/shipment/{id} **Get All products in a shipment**
+   * [Get] http://localhost:5000/api/shipment/{id} **Get All products in a shipment (With Authorization Header)**
    
-   * [Post] http://localhost:5000/api/shipment/ **Post Shipment**
+   * [Post] http://localhost:5000/api/shipment/ **Post Shipment (With Authorization Header)**
       * Json Data in body exmaple
       ```
       {
@@ -104,7 +105,16 @@ This is built on ASP.NET CORE 2.0. The front end with angular is on my repositor
       ```
   
    **Take A look at the controllers for additional information**
-  
+   
+## ScreenShots
+   * Authorization Header
+   ![Form Header](/ScreenshotsForReadme/formHeader.PNG)
+   * Post Request With Json Data
+   ![Post Request With Json Data](/ScreenshotsForReadme/JsonDataPost.PNG)
+   * Product Post Request With Form Data
+   ![Post Request With Form Data](/ScreenshotsForReadme/productAdd.PNG)
+   * Product Put Request With Form Data
+   ![Post Request With Form Data](/ScreenshotsForReadme/productEdit.PNG)
 ## Ask a question?
 
 If you have any query please contact at iammonmoy@gmail.com
