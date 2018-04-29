@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Shopping_Cart_Api.Services;
+using  System.IdentityModel.Tokens.Jwt;
 
 namespace Shopping_Cart
 {
@@ -80,6 +81,17 @@ namespace Shopping_Cart
                option.TokenValidationParameters = tokenValidationParameters;
                option.SaveToken = true;
            });
+
+           services.AddAuthorization(options =>
+            {
+            options.AddPolicy(nameof(Constants.AdministratorRole), policy => policy.RequireClaim(JwtRegisteredClaimNames.Nonce, Constants.AdministratorRole));
+            });
+
+            services.AddAuthorization(options =>
+            {
+            options.AddPolicy(nameof(Constants.SimpleUser), policy => policy.RequireClaim(JwtRegisteredClaimNames.Nonce, Constants.SimpleUser));
+            });
+
 
             services.AddMvc().AddJsonOptions( option => option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }

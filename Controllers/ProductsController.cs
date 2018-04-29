@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Shopping_Cart_Api.ViewModels;
 using Shopping_Cart_Api.Services;
+using Shopping_Cart_Api.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace Shopping_Cart_Api.Controllers
 {
@@ -23,7 +25,7 @@ namespace Shopping_Cart_Api.Controllers
             if(isSuccessResult == null) return BadRequest();
             return Json(isSuccessResult);
         }
-
+        
         [HttpGet("{id}", Name = "ProductGet")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -32,6 +34,7 @@ namespace Shopping_Cart_Api.Controllers
             return Json(isSuccessResult);
         }
 
+        [Authorize(Policy = nameof(Constants.AdministratorRole))]
         [HttpPost]
         public async Task<IActionResult> Post([FromForm]ProductViewModel model)
         {
@@ -65,6 +68,7 @@ namespace Shopping_Cart_Api.Controllers
             }
         }
 
+        [Authorize(Policy = nameof(Constants.AdministratorRole))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

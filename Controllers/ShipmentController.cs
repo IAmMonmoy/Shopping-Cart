@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace Shopping_Cart_Api.Controllers
 {
     [Route("api/[controller]")]
-
     public class ShipmentController : Controller
     {
         private readonly IShipmentService _shipmentService;
@@ -17,6 +16,7 @@ namespace Shopping_Cart_Api.Controllers
             _shipmentService = shipmentService;
         }
 
+        [Authorize(Policy = nameof(Constants.AdministratorRole))]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -26,6 +26,7 @@ namespace Shopping_Cart_Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = nameof(Constants.AdministratorRole))]
         public async Task<IActionResult> Get(Guid id)
         {
             var isSuccessResult = await _shipmentService.GetShipmentProductQuantityById(id);
@@ -34,6 +35,7 @@ namespace Shopping_Cart_Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Post([FromBody]ProductShipments model)
         {
             var isSuccessResult = await _shipmentService.AddShipment(model);

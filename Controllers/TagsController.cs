@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Shopping_Cart_Api.ViewModels;
 using Shopping_Cart_Api.Services;
+using Shopping_Cart_Api.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Shopping_Cart_Api.Controllers
 {
+    [Authorize(Policy = nameof(Constants.AdministratorRole))]
     [Route("api/[controller]")]
     public class TagsController : Controller
     {
@@ -15,7 +17,7 @@ namespace Shopping_Cart_Api.Controllers
         {
             _tagService = tagService;
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> Get()
         {
